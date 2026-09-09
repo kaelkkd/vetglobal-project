@@ -90,5 +90,9 @@ Prepare a submission message containing the repository link, setup/test pointers
 | 2026-09-08 | Container build | Pass | Locked production install completed in Python 3.12 image |
 | 2026-09-08 | Compose startup and HTTP smoke | Pass | Database became healthy, migration exited successfully, API liveness/readiness and pet creation returned expected responses |
 | 2026-09-09 | Async HTTP test client migration | Pass | 5 PostgreSQL integration tests passed with no warnings; deprecated Starlette TestClient compatibility path removed |
+| 2026-09-09 | Core backend workflow suite | Pass | 28 tests passed against PostgreSQL 17, covering upload validation and limits, atomicity, reads, callbacks, polling, and the worker simulator |
+| 2026-09-09 | Core quality checks | Pass | Ruff lint/format and strict mypy passed for 18 application source files; lockfile is current |
+| 2026-09-09 | Container and live workflow | Pass | Images rebuilt, migration and API started without runtime dependency sync, and upload → simulator → GET/poll succeeded |
+| 2026-09-09 | Structured logging review | Pass | Request/job IDs, statuses, paths, elapsed times, and enqueue-to-completion duration emitted as JSON without clinical content or secrets |
 
 Append actual command outcomes, failures, fixes, and unresolved limitations during implementation. A planned test is not evidence of a passing test.

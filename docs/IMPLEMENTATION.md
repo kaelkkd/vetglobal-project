@@ -1,6 +1,6 @@
 # Ordered implementation checklist
 
-Status: in progress; the September 8 foundation is complete. Follow [PLAN.md](../PLAN.md), [architecture](ARCHITECTURE.md), and [API contract](API.md). Work in small reviewable changes and verify each behavior before marking it complete.
+Status: in progress; the September 8 foundation and September 9 core workflow are complete. Follow [PLAN.md](../PLAN.md), [architecture](ARCHITECTURE.md), and [API contract](API.md). Work in small reviewable changes and verify each behavior before marking it complete.
 
 ## 1. Foundation — Tuesday
 
@@ -17,15 +17,15 @@ Status: in progress; the September 8 foundation is complete. Follow [PLAN.md](..
 
 ## 2. Core workflow — Wednesday
 
-- [ ] Implement bounded multipart intake and content validation.
-- [ ] Atomically create document and ENQUEUED job; test rollback.
-- [ ] Implement GET document without fetching binary contents unnecessarily.
-- [ ] Add protected callback endpoint and terminal payload validation.
-- [ ] Add row-lock-based completion idempotency and conflict handling.
-- [ ] Add manual worker simulator for explicit success/failure through HTTP.
-- [ ] Implement database-backed long polling with monotonic deadline and cancellation cleanup.
-- [ ] Add missing-resource, validation, failure, immediate-result, and timeout tests.
-- [ ] Add structured request/job logs with safe metadata and duration.
+- [x] Implement bounded multipart intake and content validation.
+- [x] Atomically create document and ENQUEUED job; test rollback.
+- [x] Implement GET document without fetching binary contents unnecessarily.
+- [x] Add protected callback endpoint and terminal payload validation.
+- [x] Add row-lock-based completion idempotency and conflict handling.
+- [x] Add manual worker simulator for explicit success/failure through HTTP.
+- [x] Implement database-backed long polling with monotonic deadline and cancellation cleanup.
+- [x] Add missing-resource, validation, failure, immediate-result, and timeout tests.
+- [x] Add structured request/job logs with safe metadata and duration.
 
 ## 3. Reliability and backend gate — Thursday first
 
