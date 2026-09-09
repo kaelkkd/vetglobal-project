@@ -15,5 +15,4 @@ COPY alembic.ini ./
 
 RUN uv sync --locked --no-dev
 
-CMD ["uv", "run", "uvicorn", "vetglobal.main:app", "--host", "0.0.0.0", "--port", "8000"]
-
+CMD ["uv", "run", "--no-sync", "uvicorn", "vetglobal.main:app", "--host", "0.0.0.0", "--port", "8000"]
