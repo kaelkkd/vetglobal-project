@@ -1,6 +1,6 @@
-# Planned API contract
+# API contract
 
-Status: contract in progress. Pet creation and health routes are implemented; document and job routes remain planned. See [architecture](ARCHITECTURE.md) for storage and concurrency rules.
+Status: backend contract implemented. Reliability-gate concurrency tests and optional upload idempotency remain planned. See [architecture](ARCHITECTURE.md) for storage and concurrency rules.
 
 ## Conventions
 
