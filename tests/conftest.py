@@ -61,6 +61,10 @@ async def client(migrated_database: str) -> AsyncIterator[AsyncClient]:
         database_url=migrated_database,
         internal_service_token="test-internal-token-value",
         allowed_frontend_origins=["http://localhost:5173"],
+        max_file_size_bytes=256,
+        max_request_body_bytes=1024,
+        polling_timeout_seconds=0.08,
+        polling_interval_seconds=0.01,
     )
     app = create_app(settings)
     transport = ASGITransport(app=app)
