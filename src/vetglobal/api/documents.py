@@ -1,6 +1,17 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, File, Path, Query, Request, Response, UploadFile, status
+from fastapi import (
+    APIRouter,
+    Depends,
+    File,
+    Header,
+    Path,
+    Query,
+    Request,
+    Response,
+    UploadFile,
+    status,
+)
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from vetglobal.config import Settings
@@ -27,10 +38,13 @@ async def upload_document(
     file: Annotated[UploadFile, File()],
     request: Request,
     session: Annotated[AsyncSession, Depends(session_dependency)],
+    idempotency_key: Annotated[
+        str | None, Header(alias="Idempotency-Key", min_length=1, max_length=200)
+    ] = None,
 ) -> DocumentAccepted:
     settings: Settings = request.app.state.settings
     validated = await validate_upload(file, settings.max_file_size_bytes)
-    return await create_document_job(session, pet_id, validated)
+    return await create_document_job(session, pet_id, validated, idempotency_key)
 
 
 @router.get(

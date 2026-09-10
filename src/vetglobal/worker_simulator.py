@@ -1,8 +1,10 @@
 import argparse
-import os
 import sys
 
 import httpx
+from pydantic import ValidationError
+
+from vetglobal.config import Settings
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -19,9 +21,12 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main() -> int:
     args = build_parser().parse_args()
-    token = os.environ.get("INTERNAL_SERVICE_TOKEN")
-    if not token:
-        print("INTERNAL_SERVICE_TOKEN is required", file=sys.stderr)
+    try:
+        settings = Settings()  # type: ignore[call-arg]
+        token = settings.internal_service_token.get_secret_value()
+    except ValidationError:
+        message = "A valid INTERNAL_SERVICE_TOKEN is required in .env or the environment"
+        print(message, file=sys.stderr)
         return 2
     if args.job_id <= 0:
         print("job_id must be positive", file=sys.stderr)

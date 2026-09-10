@@ -1,4 +1,4 @@
-import asyncio
+from asyncio import sleep, timeout
 from time import monotonic
 
 from fastapi import Request
@@ -35,7 +35,7 @@ async def poll_document(
         first_check = False
 
         try:
-            async with asyncio.timeout(max(remaining, 0.001)):
+            async with timeout(max(remaining, 0.001)):
                 document = await _read_once(session_factory, document_id)
         except TimeoutError:
             return None
@@ -51,4 +51,4 @@ async def poll_document(
         remaining = deadline - monotonic()
         if remaining <= 0:
             return None
-        await asyncio.sleep(min(interval_seconds, remaining))
+        await sleep(min(interval_seconds, remaining))

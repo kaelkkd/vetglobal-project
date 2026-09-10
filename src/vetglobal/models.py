@@ -1,7 +1,16 @@
 from datetime import datetime
 from enum import StrEnum
 
-from sqlalchemy import CheckConstraint, DateTime, ForeignKey, Index, LargeBinary, String, func
+from sqlalchemy import (
+    CheckConstraint,
+    DateTime,
+    ForeignKey,
+    Index,
+    LargeBinary,
+    String,
+    UniqueConstraint,
+    func,
+)
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 
@@ -37,6 +46,20 @@ class Document(Base):
     __table_args__ = (
         CheckConstraint("size_bytes > 0", name="ck_documents_size_positive"),
         CheckConstraint("octet_length(sha256) = 64", name="ck_documents_sha256_length"),
+        CheckConstraint(
+            "(idempotency_key IS NULL AND request_fingerprint IS NULL) OR "
+            "(idempotency_key IS NOT NULL AND request_fingerprint IS NOT NULL)",
+            name="ck_documents_idempotency_pair",
+        ),
+        CheckConstraint(
+            "idempotency_key IS NULL OR char_length(btrim(idempotency_key)) > 0",
+            name="ck_documents_idempotency_key_nonempty",
+        ),
+        CheckConstraint(
+            "request_fingerprint IS NULL OR octet_length(request_fingerprint) = 64",
+            name="ck_documents_fingerprint_length",
+        ),
+        UniqueConstraint("pet_id", "idempotency_key", name="uq_documents_pet_id_idempotency_key"),
         Index("ix_documents_pet_id", "pet_id"),
     )
 
@@ -46,6 +69,8 @@ class Document(Base):
     media_type: Mapped[str] = mapped_column(String(100))
     size_bytes: Mapped[int]
     sha256: Mapped[str] = mapped_column(String(64))
+    idempotency_key: Mapped[str | None] = mapped_column(String(200))
+    request_fingerprint: Mapped[str | None] = mapped_column(String(64))
     content: Mapped[bytes] = mapped_column(LargeBinary)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False
