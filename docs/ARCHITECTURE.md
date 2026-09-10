@@ -48,7 +48,7 @@ Split modules further only when real complexity warrants it.
 | Pet | Generated positive integer ID, nonempty name and owner_name, UTC created_at |
 | Document | Generated ID, pet foreign key, original filename, normalized media type, byte size, SHA-256, content bytes, UTC created_at |
 | Job | Generated ID, unique document foreign key, ENQUEUED/DONE/FAILED status, nullable summary/error, UTC created_at and completed_at |
-| Upload idempotency, if included | Nullable key and request fingerprint on Document; unique (pet_id, idempotency_key) for supplied keys |
+| Upload idempotency | Nullable key and request fingerprint on Document; unique (pet_id, idempotency_key) for supplied keys |
 
 One document has one job in this version. Index foreign keys used by lookups. Enforce valid status/result combinations with database checks as well as Pydantic validation. ENQUEUED has no terminal timestamp or result; DONE has summary only; FAILED has error only. Use timezone-aware timestamps. Do not return binary content in metadata queries.
 
@@ -124,3 +124,5 @@ Real summarization, full PDF validation, malware scanning, OCR, Redis/SQS, backg
 | 2026-09-08 | PostgreSQL jobs and file bytes | Small, transactional, stateless across instances |
 | 2026-09-08 | Database-checking long polling first; notifications stretch | Protect correctness and Friday deadline |
 | 2026-09-08 | Manual callback simulator | Matches the assessment without building a queue platform |
+| 2026-09-10 | Upload idempotency stored with the document | Database uniqueness resolves races across instances; a request fingerprint detects conflicting reuse |
+| 2026-09-10 | Minimal single-screen React workflow | Keeps the bonus UI focused on the API contract and makes pending, terminal, and connection states explicit |

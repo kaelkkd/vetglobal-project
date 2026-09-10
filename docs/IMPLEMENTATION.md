@@ -1,6 +1,6 @@
 # Ordered implementation checklist
 
-Status: in progress; the September 8 foundation and September 9 core workflow are complete. Follow [PLAN.md](../PLAN.md), [architecture](ARCHITECTURE.md), and [API contract](API.md). Work in small reviewable changes and verify each behavior before marking it complete.
+Status: in progress; the September 8–10 work is complete. Follow [PLAN.md](../PLAN.md), [architecture](ARCHITECTURE.md), and [API contract](API.md). Work in small reviewable changes and verify each behavior before marking it complete.
 
 ## 1. Foundation — Tuesday
 
@@ -29,38 +29,38 @@ Status: in progress; the September 8 foundation and September 9 core workflow ar
 
 ## 3. Reliability and backend gate — Thursday first
 
-- [ ] Test callback races and repeated delivery.
-- [ ] Test cross-instance upload/completion/polling against shared PostgreSQL.
-- [ ] Test polling completion near the deadline and session release between checks.
-- [ ] Add upload Idempotency-Key fingerprint and database uniqueness, if schedule permits.
-- [ ] Test identical, conflicting, and concurrent upload replays if included.
-- [ ] Add CI running migrations, tests, lint/format checks, and type checks.
-- [ ] Verify clean-start API instructions and worker simulator examples.
-- [ ] Review transaction boundaries, exception handling, resource cleanup, and generated code.
-- [ ] Record actual checks/results in VERIFICATION.md and current behavior in README.
+- [x] Test callback races and repeated delivery.
+- [x] Test cross-instance upload/completion/polling against shared PostgreSQL.
+- [x] Test polling completion near the deadline and session release between checks.
+- [x] Add upload Idempotency-Key fingerprint and database uniqueness, if schedule permits.
+- [x] Test identical, conflicting, and concurrent upload replays if included.
+- [x] Add CI running migrations, tests, lint/format checks, and type checks.
+- [x] Verify clean-start API instructions and worker simulator examples.
+- [x] Review transaction boundaries, exception handling, resource cleanup, and generated code.
+- [x] Record actual checks/results in VERIFICATION.md and current behavior in README.
 
 ### Mandatory backend gate before frontend
 
-- [ ] All five required routes pass contract tests, including failed jobs.
-- [ ] Multi-instance behavior works without authoritative in-memory state.
-- [ ] Completion idempotency is concurrency-safe.
-- [ ] Polling returns 204 by its configured deadline and cleans up on cancellation.
-- [ ] Clean database migrations and documented local startup work.
-- [ ] pytest, Ruff checks, and configured type checks pass.
-- [ ] No known core correctness defect remains; any deferred bonus is documented.
+- [x] All five required routes pass contract tests, including failed jobs.
+- [x] Multi-instance behavior works without authoritative in-memory state.
+- [x] Completion idempotency is concurrency-safe.
+- [x] Polling returns 204 by its configured deadline and cleans up on cancellation.
+- [x] Clean database migrations and documented local startup work.
+- [x] pytest, Ruff checks, and configured type checks pass.
+- [x] No known core correctness defect remains; any deferred bonus is documented.
 
 Do not create the React app before every gate item passes.
 
 ## 4. Minimal frontend — Thursday after gate
 
-- [ ] Scaffold React + TypeScript + Vite with a committed package lockfile.
-- [ ] Implement pet creation, current pet display, and file upload.
-- [ ] Display pending state immediately after acceptance.
-- [ ] Implement cursor=0 polling, empty-204 handling, cancellation, and transient-error backoff.
-- [ ] Display summary and processing failure clearly; distinguish connection failures.
-- [ ] Keep the internal token and worker callback controls out of the browser.
-- [ ] Add simple accessible labels, disabled submitting states, and readable layout.
-- [ ] Verify a production frontend build and key polling behavior tests.
+- [x] Scaffold React + TypeScript + Vite with a package lockfile.
+- [x] Implement pet creation, current pet display, and file upload.
+- [x] Display pending state immediately after acceptance.
+- [x] Implement cursor=0 polling, empty-204 handling, cancellation, and transient-error backoff.
+- [x] Display summary and processing failure clearly; distinguish connection failures.
+- [x] Keep the internal token and worker callback controls out of the browser.
+- [x] Add simple accessible labels, disabled submitting states, and readable layout.
+- [x] Verify a production frontend build and key polling behavior tests.
 
 ## 5. Final delivery — Friday
 

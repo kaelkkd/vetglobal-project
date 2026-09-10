@@ -1,6 +1,6 @@
 # Verification and delivery
 
-Status: foundation checks completed; core workflow verification remains pending.
+Status: September 8–10 implementation checks completed; final browser smoke and delivery review remain for September 11.
 
 ## Testing approach
 
@@ -94,5 +94,10 @@ Prepare a submission message containing the repository link, setup/test pointers
 | 2026-09-09 | Core quality checks | Pass | Ruff lint/format and strict mypy passed for 18 application source files; lockfile is current |
 | 2026-09-09 | Container and live workflow | Pass | Images rebuilt, migration and API started without runtime dependency sync, and upload → simulator → GET/poll succeeded |
 | 2026-09-09 | Structured logging review | Pass | Request/job IDs, statuses, paths, elapsed times, and enqueue-to-completion duration emitted as JSON without clinical content or secrets |
+| 2026-09-10 | Reliability and concurrency suite | Pass | 37 PostgreSQL tests passed, including upload/callback races, cross-instance polling, deadline completion, connection release, cancellation, and idempotent replay |
+| 2026-09-10 | Backend quality gate | Pass | Ruff lint/format and strict mypy passed; CI workflow now runs migrations and the same checks with PostgreSQL 17 |
+| 2026-09-10 | Compose and simulator smoke | Pass | Images rebuilt, migration completed, API started, and live upload → `.env`-configured simulator → poll returned DONE |
+| 2026-09-10 | Frontend tests and production build | Pass | 3 Vitest tests covered empty 204 handling, terminal polling stop, and cancellation; TypeScript and Vite production build completed with Node 22.20.0 |
+| 2026-09-10 | Frontend local preview | Pass | Vite served the workflow at `http://127.0.0.1:5173/` and returned HTTP 200; browser workflow smoke remains scheduled for final delivery |
 
 Append actual command outcomes, failures, fixes, and unresolved limitations during implementation. A planned test is not evidence of a passing test.
