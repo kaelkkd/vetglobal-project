@@ -1,6 +1,6 @@
 # API contract
 
-Status: backend contract implemented. Reliability-gate concurrency tests and optional upload idempotency remain planned. See [architecture](ARCHITECTURE.md) for storage and concurrency rules.
+Status: backend contract implemented and verified, including upload idempotency and concurrency behavior. See [architecture](ARCHITECTURE.md) for storage and concurrency rules.
 
 ## Conventions
 
@@ -20,7 +20,7 @@ Return 201 with id, name, owner_name, and created_at. Invalid fields return 422.
 
 ## POST /pets/{pet_id}/documents
 
-Multipart field: file. Optional header: Idempotency-Key (when the planned enhancement is enabled). Accept a nonempty UTF-8 .txt or basic-signature-valid .pdf, up to 5 MiB. Extension matching is case-insensitive.
+Multipart field: file. Optional header: Idempotency-Key. Accept a nonempty UTF-8 .txt or basic-signature-valid .pdf, up to 5 MiB. Extension matching is case-insensitive. Keys are trimmed, limited to 200 characters, and scoped to a pet.
 
 Return 202 after commit:
 

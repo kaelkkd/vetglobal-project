@@ -1,3 +1,4 @@
+import asyncio
 import hashlib
 from collections.abc import AsyncIterator
 
@@ -80,6 +81,84 @@ async def test_duplicate_uploads_without_idempotency_key_create_distinct_jobs(
     assert second.status_code == 202
     assert first.json()["document_id"] != second.json()["document_id"]
     assert first.json()["job_id"] != second.json()["job_id"]
+
+
+async def test_idempotent_upload_replays_original_receipt(client: AsyncClient) -> None:
+    pet_id = await create_pet(client)
+    headers = {"Idempotency-Key": " upload-1 "}
+    files = {"file": ("record.txt", b"same content", "text/plain")}
+
+    first = await client.post(f"/pets/{pet_id}/documents", headers=headers, files=files)
+    replay = await client.post(f"/pets/{pet_id}/documents", headers=headers, files=files)
+
+    assert first.status_code == 202
+    assert replay.status_code == 202
+    assert replay.json() == first.json()
+
+
+async def test_idempotent_replay_stays_an_acceptance_receipt_after_completion(
+    client: AsyncClient,
+) -> None:
+    pet_id = await create_pet(client)
+    headers = {"Idempotency-Key": "completed-upload"}
+    files = {"file": ("record.txt", b"same content", "text/plain")}
+    first = await client.post(f"/pets/{pet_id}/documents", headers=headers, files=files)
+    await client.post(
+        f"/internal/jobs/{first.json()['job_id']}/complete",
+        headers={"X-Internal-Token": "test-internal-token-value"},
+        json={"status": "DONE", "summary": "Complete"},
+    )
+
+    replay = await client.post(f"/pets/{pet_id}/documents", headers=headers, files=files)
+
+    assert replay.status_code == 202
+    assert replay.json() == first.json()
+    assert replay.json()["status"] == "ENQUEUED"
+
+
+async def test_idempotency_key_rejects_different_upload(client: AsyncClient) -> None:
+    pet_id = await create_pet(client)
+    headers = {"Idempotency-Key": "upload-1"}
+    await client.post(
+        f"/pets/{pet_id}/documents",
+        headers=headers,
+        files={"file": ("record.txt", b"first", "text/plain")},
+    )
+
+    response = await client.post(
+        f"/pets/{pet_id}/documents",
+        headers=headers,
+        files={"file": ("record.txt", b"different", "text/plain")},
+    )
+
+    assert response.status_code == 409
+    assert response.json()["code"] == "idempotency_key_conflict"
+
+
+async def test_concurrent_idempotent_upload_creates_one_pair(
+    client_pair: tuple[AsyncClient, AsyncClient], migrated_database: str
+) -> None:
+    first_client, second_client = client_pair
+    pet_id = await create_pet(first_client)
+
+    async def upload(client: AsyncClient):  # type: ignore[no-untyped-def]
+        return await client.post(
+            f"/pets/{pet_id}/documents",
+            headers={"Idempotency-Key": "concurrent-upload"},
+            files={"file": ("record.txt", b"same content", "text/plain")},
+        )
+
+    first, second = await asyncio.gather(upload(first_client), upload(second_client))
+
+    assert first.status_code == second.status_code == 202
+    assert first.json() == second.json()
+    engine = create_engine(migrated_database)
+    with engine.connect() as connection:
+        counts = connection.execute(
+            text("SELECT (SELECT count(*) FROM documents), (SELECT count(*) FROM jobs)")
+        ).one()
+    engine.dispose()
+    assert counts == (1, 1)
 
 
 @pytest.mark.parametrize(
