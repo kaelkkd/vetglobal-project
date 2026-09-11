@@ -1,6 +1,6 @@
 # VetGlobal development plan
 
-Status: implementation in progress; the September 8–10 deliverables are complete.
+Status: implementation complete through September 11; submission and publication remain user-controlled.
 
 Target completion: **Friday, September 11, 2026**, America/Sao_Paulo.
 

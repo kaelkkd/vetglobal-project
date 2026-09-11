@@ -1,6 +1,6 @@
 # Architecture and decisions
 
-Status: active implementation baseline. See [PLAN.md](../PLAN.md) for priorities and deadline.
+Status: implemented delivery baseline. See [PLAN.md](../PLAN.md) for scope and sequencing.
 
 ## Structure
 

@@ -1,6 +1,6 @@
 # Verification and delivery
 
-Status: September 8–10 implementation checks completed; final browser smoke and delivery review remain for September 11.
+Status: delivery verification complete through September 11. Publishing and submission are intentionally not performed.
 
 ## Testing approach
 
@@ -30,9 +30,9 @@ Use short configurable polling intervals/timeouts for most tests and a focused t
 
 Database errors caused by predictable domain conflicts must map to the documented response rather than 500. Unexpected failures should be logged safely and rolled back.
 
-## Planned command inventory
+## Verified command inventory
 
-These are intended command shapes, not verified commands. Finalize module paths/options during implementation and publish only working commands in README.
+These command shapes were exercised during implementation. The README contains the complete setup order and frontend commands.
 
 ```text
 uv sync --locked
@@ -45,7 +45,7 @@ uv run ruff format --check .
 uv run mypy src
 ```
 
-Also document full Compose startup, test database configuration, the worker simulator invocation, frontend install/dev/build commands, and how to stop services without deleting data. Choose one frontend package manager and lockfile. CI must use its reproducible installation command.
+Full Compose startup, test database configuration, simulator usage, frontend commands, and non-destructive shutdown are documented in the README. The frontend uses npm with `package-lock.json`, and CI installs it with `npm ci`.
 
 ## Demo script
 
@@ -61,21 +61,15 @@ Also document full Compose startup, test database configuration, the worker simu
 
 ## README acceptance checklist
 
-- [ ] Prerequisites and tested Python/PostgreSQL/Node versions.
-- [ ] uv installation reference, locked dependency setup, environment configuration.
-- [ ] Local and Docker startup, migration, test, and frontend commands.
-- [ ] Example requests for every required endpoint, including failure.
-- [ ] Cursor semantics, 204 handling, and worker simulation instructions.
-- [ ] Storage, queue simulation, duplicate handling, idempotency, access-control limitations.
-- [ ] Stateless scaling and polling tradeoffs.
-- [ ] Deliberately omitted and incomplete features accurately listed.
-- [ ] LLM assistance and human review described honestly.
-
-## Presentation preparation
-
-Suggested 30-minute allocation: 5 minutes context/demo, 10 minutes architecture and concurrency, 5 minutes tests/error handling, 5 minutes limitations and scaling, 5 minutes questions. Be ready to explain every dependency and major transaction, the difference between callback retries and reprocessing, why owner_name is not authorization, and how a real queue/object store would change the design.
-
-Prepare a submission message containing the repository link, setup/test pointers, known limitations, and a request for a 30-minute meeting. Do not send messages or publish without the user's instruction.
+- [x] Prerequisites and tested Python/PostgreSQL/Node versions.
+- [x] uv installation reference, locked dependency setup, environment configuration.
+- [x] Local and Docker startup, migration, test, and frontend commands.
+- [x] Example requests for every required endpoint, including failure.
+- [x] Cursor semantics, 204 handling, and worker simulation instructions.
+- [x] Storage, queue simulation, duplicate handling, idempotency, access-control limitations.
+- [x] Stateless scaling and polling tradeoffs.
+- [x] Deliberately omitted and incomplete features accurately listed.
+- [x] LLM assistance and human review described honestly.
 
 ## Evidence log
 
@@ -99,5 +93,11 @@ Prepare a submission message containing the repository link, setup/test pointers
 | 2026-09-10 | Compose and simulator smoke | Pass | Images rebuilt, migration completed, API started, and live upload → `.env`-configured simulator → poll returned DONE |
 | 2026-09-10 | Frontend tests and production build | Pass | 3 Vitest tests covered empty 204 handling, terminal polling stop, and cancellation; TypeScript and Vite production build completed with Node 22.20.0 |
 | 2026-09-10 | Frontend local preview | Pass | Vite served the workflow at `http://127.0.0.1:5173/` and returned HTTP 200; browser workflow smoke remains scheduled for final delivery |
+| 2026-09-11 | Locked clean-start dependency setup | Pass | `uv sync --locked` and frontend `npm ci` completed from the committed lockfiles |
+| 2026-09-11 | Full local CI-equivalent gate | Pass | 37 PostgreSQL tests, 3 Vitest tests, Ruff lint/format, strict mypy, TypeScript, and Vite production build passed |
+| 2026-09-11 | Compose clean start | Pass | PostgreSQL 17.11 became healthy, migrations completed, API readiness returned 200, and development/test databases remained separate |
+| 2026-09-11 | Browser workflow smoke | Pass | Pet creation/reset, TXT success, PDF failure, acceptance receipt, pending/terminal states, and error-free browser console verified at `localhost:5173` |
+| 2026-09-11 | Live edge-case rehearsal | Pass | Unknown document returned 404; pending poll returned empty 204 after 25.3 seconds; identical callback replay returned 200 and conflicting replay returned 409 |
+| 2026-09-11 | Repository and delivery review | Pass | Tracked-file, secret/configuration, generated-artifact, documentation, demo, and submission-material review completed; `.env` and `tests.http` remain outside version control |
 
 Append actual command outcomes, failures, fixes, and unresolved limitations during implementation. A planned test is not evidence of a passing test.
