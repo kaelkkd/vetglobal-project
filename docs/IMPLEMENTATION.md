@@ -1,6 +1,6 @@
 # Ordered implementation checklist
 
-Status: in progress; the September 8–10 work is complete. Follow [PLAN.md](../PLAN.md), [architecture](ARCHITECTURE.md), and [API contract](API.md). Work in small reviewable changes and verify each behavior before marking it complete.
+Status: September 8–11 delivery work complete. Follow [PLAN.md](../PLAN.md), [architecture](ARCHITECTURE.md), and [API contract](API.md). Publishing and submission remain separate user-controlled actions.
 
 ## 1. Foundation — Tuesday
 
@@ -64,14 +64,14 @@ Do not create the React app before every gate item passes.
 
 ## 5. Final delivery — Friday
 
-- [ ] Run the verification matrix and browser smoke flow.
-- [ ] Finish README setup, API examples, test commands, tradeoffs, and omissions.
-- [ ] Verify clean checkout instructions using only documented prerequisites.
-- [ ] Prepare demonstration and discussion outline.
-- [ ] Review repository for secrets, generated clutter, and misleading claims.
-- [ ] Prepare repository link and meeting-request text; do not send automatically.
+- [x] Run the verification matrix and browser smoke flow.
+- [x] Finish README setup, API examples, test commands, tradeoffs, and omissions.
+- [x] Verify clean checkout instructions using only documented prerequisites.
+- [x] Prepare demonstration and discussion outline.
+- [x] Review repository for secrets, generated clutter, and misleading claims.
+- [x] Prepare repository link and meeting-request text; do not send automatically.
 
-## Stretch: notifications
+## Deliberately deferred stretch: notifications
 
 Start only after the delivery target works, including React and documentation, with time remaining for verification.
 
