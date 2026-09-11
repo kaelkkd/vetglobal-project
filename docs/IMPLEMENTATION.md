@@ -69,7 +69,7 @@ Do not create the React app before every gate item passes.
 - [x] Verify clean checkout instructions using only documented prerequisites.
 - [x] Prepare demonstration and discussion outline.
 - [x] Review repository for secrets, generated clutter, and misleading claims.
-- [x] Prepare repository link and meeting-request text; do not send automatically.
+- [x] Polish the developed single-screen React frontend.
 
 ## Deliberately deferred stretch: notifications
 

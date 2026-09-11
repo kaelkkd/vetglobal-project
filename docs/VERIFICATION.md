@@ -71,12 +71,6 @@ Full Compose startup, test database configuration, simulator usage, frontend com
 - [x] Deliberately omitted and incomplete features accurately listed.
 - [x] LLM assistance and human review described honestly.
 
-## Presentation preparation
-
-Suggested 30-minute allocation: 5 minutes context/demo, 10 minutes architecture and concurrency, 5 minutes tests/error handling, 5 minutes limitations and scaling, 5 minutes questions. Be ready to explain every dependency and major transaction, the difference between callback retries and reprocessing, why owner_name is not authorization, and how a real queue/object store would change the design.
-
-Prepare a submission message containing the repository link, setup/test pointers, known limitations, and a request for a 30-minute meeting. Do not send messages or publish without the user's instruction.
-
 ## Evidence log
 
 | Date | Check | Result | Notes |
