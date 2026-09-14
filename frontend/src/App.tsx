@@ -20,15 +20,9 @@ type Theme = "light" | "dark";
 
 const COPY = {
   en: {
-    documentOperations: "Document operations",
-    localAssessment: "Local assessment",
     workflow: "Document workflow",
     title: "Clinical summary intake",
     introduction: "Create a pet record, upload a TXT or PDF, and follow its processing state.",
-    mode: "Mode",
-    simulation: "Simulation",
-    sequence: "Sequence",
-    sequenceValue: "Record / Document / Result",
     petRecord: "Pet record",
     petDescription: "Start a new single-pet workspace.",
     petName: "Pet name",
@@ -76,15 +70,9 @@ const COPY = {
     status: { idle: "Not started", uploading: "Uploading", pending: "Pending", done: "Complete", failed: "Failed", connection: "Offline" },
   },
   "pt-BR": {
-    documentOperations: "Operações de documentos",
-    localAssessment: "Ambiente local",
     workflow: "Fluxo de documentos",
     title: "Entrada de resumo clínico",
     introduction: "Crie o cadastro do pet, envie um TXT ou PDF e acompanhe o processamento.",
-    mode: "Modo",
-    simulation: "Simulação",
-    sequence: "Sequência",
-    sequenceValue: "Cadastro / Documento / Resultado",
     petRecord: "Cadastro do pet",
     petDescription: "Inicie um novo espaço de trabalho para um único pet.",
     petName: "Nome do pet",
@@ -232,22 +220,17 @@ function App() {
   return (
     <div className="app-shell">
       <header className="topbar">
-        <a className="brand" href="#main" aria-label={`VetGlobal — ${copy.localAssessment}`}>
+        <a className="brand" href="#main" aria-label="VetGlobal">
           <span className="brand-mark" aria-hidden="true">V</span>
           <span className="brand-name">VetGlobal</span>
         </a>
-        <div className="topbar-context">
-          <div className="environment">
-            <span>{copy.documentOperations}</span><span aria-hidden="true">/</span><strong>{copy.localAssessment}</strong>
-          </div>
-          <div className="interface-controls">
-            <button className="utility-button" type="button" onClick={() => setLocale(locale === "en" ? "pt-BR" : "en")} aria-label={copy.switchLanguage} title={copy.switchLanguage}>
-              {locale === "en" ? "PT-BR" : "EN"}
-            </button>
-            <button className="utility-button theme-button" type="button" onClick={() => setTheme(theme === "light" ? "dark" : "light")} aria-label={copy.switchTheme(theme)} title={copy.switchTheme(theme)}>
-              <span aria-hidden="true">{theme === "light" ? "◐" : "◑"}</span>{copy.themeAction(theme)}
-            </button>
-          </div>
+        <div className="interface-controls">
+          <button className="utility-button" type="button" onClick={() => setLocale(locale === "en" ? "pt-BR" : "en")} aria-label={copy.switchLanguage} title={copy.switchLanguage}>
+            {locale === "en" ? "PT-BR" : "EN"}
+          </button>
+          <button className="utility-button theme-button" type="button" onClick={() => setTheme(theme === "light" ? "dark" : "light")} aria-label={copy.switchTheme(theme)} title={copy.switchTheme(theme)}>
+            <span aria-hidden="true">{theme === "light" ? "◐" : "◑"}</span>{copy.themeAction(theme)}
+          </button>
         </div>
       </header>
 
@@ -256,10 +239,6 @@ function App() {
           <div className="heading-copy">
             <p className="eyebrow">{copy.workflow}</p><h1>{copy.title}</h1><p>{copy.introduction}</p>
           </div>
-          <dl className="workflow-context" aria-label={copy.workflow}>
-            <div><dt>{copy.mode}</dt><dd>{copy.simulation}</dd></div>
-            <div><dt>{copy.sequence}</dt><dd>{copy.sequenceValue}</dd></div>
-          </dl>
         </div>
 
         <div className="workflow-grid">
