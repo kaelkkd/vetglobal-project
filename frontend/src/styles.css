@@ -39,9 +39,6 @@ button, a, input { outline-offset: 3px; }
 .brand { display: flex; gap: 12px; align-items: center; color: inherit; text-decoration: none; font-weight: 760; letter-spacing: -.02em; }
 .brand-mark { width: 32px; height: 32px; display: grid; place-items: center; background: #f7fbf9; color: #113c43; }
 .brand-name { font-size: 1rem; }
-.topbar-context { display: flex; gap: 22px; align-items: center; }
-.environment { display: flex; gap: 10px; align-items: center; font-size: .75rem; letter-spacing: .09em; text-transform: uppercase; color: #aac6c2; }
-.environment strong { color: #eef7f4; font-weight: 700; }
 .interface-controls { display: flex; gap: 6px; }
 .utility-button { min-height: 34px; padding: 7px 10px; border: 1px solid #51767a; color: #eef7f4; background: transparent; font-size: .7rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
 .utility-button:hover:not(:disabled) { color: #113c43; background: #eef7f4; transform: none; }
@@ -49,17 +46,12 @@ button, a, input { outline-offset: 3px; }
 .theme-button span { font-size: .9rem; line-height: 1; }
 
 .workspace { width: min(1160px, 90vw); margin: 0 auto; padding: 52px 0 72px; }
-.page-heading { margin-bottom: 32px; display: flex; gap: 48px; align-items: end; justify-content: space-between; }
+.page-heading { margin-bottom: 32px; }
 .heading-copy { max-width: 700px; }
 .eyebrow, .result-kicker { margin: 0 0 8px; color: #357269; font-size: .75rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
 h1, h2, h3, p { margin-top: 0; }
 h1 { margin-bottom: 12px; color: #102f35; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.25rem, 5vw, 3.85rem); line-height: 1; font-weight: 500; letter-spacing: -.04em; }
 .heading-copy > p:last-child { margin-bottom: 0; color: #537076; font-size: 1.05rem; line-height: 1.6; }
-.workflow-context { min-width: 255px; margin: 0 0 4px; border-top: 1px solid #aebfba; border-bottom: 1px solid #aebfba; }
-.workflow-context div { padding: 8px 0; display: grid; grid-template-columns: 70px 1fr; gap: 12px; }
-.workflow-context div + div { border-top: 1px solid #d6dfdc; }
-.workflow-context dt { color: #6b7e7b; font-size: .75rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
-.workflow-context dd { margin: 0; color: #24464a; font-size: .78rem; font-weight: 650; }
 
 .workflow-grid { display: grid; grid-template-columns: minmax(300px, .86fr) minmax(380px, 1.14fr); gap: 20px; align-items: stretch; }
 .panel { background: #fff; border: 1px solid #bdccc7; box-shadow: 5px 6px 0 rgba(38, 74, 72, .055); }
@@ -138,8 +130,6 @@ button:disabled { cursor: not-allowed; color: #80908d; background: #dce4e1; bord
 :root[data-theme="dark"] .app-shell { background: #101b1e; }
 :root[data-theme="dark"] .topbar { color: #f2f7f5; background: #0b3036; border-bottom-color: #b9822e; }
 :root[data-theme="dark"] .brand-mark { color: #0b3036; background: #edf5f2; }
-:root[data-theme="dark"] .environment { color: #93aaa7; }
-:root[data-theme="dark"] .environment strong { color: #dce9e5; }
 :root[data-theme="dark"] .utility-button { color: #dce9e5; border-color: #557578; }
 :root[data-theme="dark"] .utility-button:hover:not(:disabled) { color: #0b3036; background: #dce9e5; }
 :root[data-theme="dark"] h1,
@@ -149,10 +139,6 @@ button:disabled { cursor: not-allowed; color: #80908d; background: #dce4e1; bord
 :root[data-theme="dark"] .step-heading p { color: #9fb2ae; }
 :root[data-theme="dark"] .eyebrow,
 :root[data-theme="dark"] .result-kicker { color: #70aa9f; }
-:root[data-theme="dark"] .workflow-context { border-color: #536966; }
-:root[data-theme="dark"] .workflow-context div + div { border-color: #344946; }
-:root[data-theme="dark"] .workflow-context dt { color: #91a6a2; }
-:root[data-theme="dark"] .workflow-context dd { color: #d2dfdc; }
 :root[data-theme="dark"] .panel { background: #172528; border-color: #3d514e; box-shadow: 5px 6px 0 rgba(0, 0, 0, .18); }
 :root[data-theme="dark"] .step-divider,
 :root[data-theme="dark"] .status-header,
@@ -199,10 +185,7 @@ button:disabled { cursor: not-allowed; color: #80908d; background: #dce4e1; bord
 :root[data-theme="dark"] .receipt { background: #132124; }
 
 @media (max-width: 780px) {
-  .environment { display: none; }
   .workspace { width: min(92vw, 620px); padding-top: 38px; }
-  .page-heading { display: block; }
-  .workflow-context { margin-top: 26px; }
   .workflow-grid { grid-template-columns: 1fr; }
   .status-panel { min-height: 480px; }
 }
@@ -210,7 +193,6 @@ button:disabled { cursor: not-allowed; color: #80908d; background: #dce4e1; bord
 @media (max-width: 430px) {
   .topbar { padding: 0 20px; }
   .brand-name { display: none; }
-  .topbar-context { gap: 8px; }
   .theme-button { padding-left: 8px; padding-right: 8px; }
   .intake-panel, .status-header, .status-content { padding-left: 20px; padding-right: 20px; }
   .status-header { align-items: flex-start; }
